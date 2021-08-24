@@ -20,6 +20,8 @@ for l in f:
     if key == '!sava_fps':  sava_fps = int(ll[1])
     elif key == '!sava_n_frames':  sava_n_frames = int(ll[1])
     elif key == '!wait_max':  wait_max = int(ll[1])
+    elif key == '!stabilization_delay':
+      stabilization_delay = int(ll[1])
     else:
       print("Error.  Unrecognized key.")
       print("  key: ", key)
@@ -75,12 +77,7 @@ class c_savitime:
     self.btn1.grid(column=0, row=2, sticky=tk.W)
     #
     #######################
-    ### For testing:
-    # self.dt1 = 3000
-    # self.dt2 = 4000
-    # self.dt3 = 7000
-    ### For real:
-    self.dt1 = 2000
+    self.dt1 = int(stabilization_delay * 1000)
     self.dt2 = int(sava_vid_len * 1000)
     self.dt3 = wait_max * 1000
     #######################
