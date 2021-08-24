@@ -1,0 +1,23 @@
+
+
+savitimer is meant to be used with the SAVA video capture system
+used to measure ciliary beat frequency (CBF) with a microscope.
+savitimer is used to keep track of when SAVA videos can be saved.
+After adjusting the focus on the microscope, a delay is required
+before videos can be saved.  This delay can be calculated from
+the frame capture rate and the number of frames to be saved.
+savitimer creates a GUI window with a button that can be clicked
+to start the timer before the SAVA "save" button can be hit.
+It divides the time into the following periods:
+- In the initial period, a few frames should not be saved as
+  the microscope table stabilizes.
+- Then there is the period while frames are collected.
+- Finally there is a period during which the video can be
+  saved.  During this time it is sometimes necessary to wait
+  for a particular event to be seen, for example to capture
+  flowing particles for speed measurements.  But it may be
+  necessary to take the video within a specified time period
+  because of changing conditions.
+
+
+
