@@ -4,6 +4,7 @@ import tkinter as tk
 from datetime import datetime
 from datetime import timedelta
 import sys
+import os
 
 
 # row 0:  lab1 - time
@@ -16,8 +17,13 @@ import sys
 # row 7:  mes4  - sava specs
 # row 8:  2nd button
 
+
+
 ############################################
-f = open('savitime.config')
+fname_conf_default = 'default/savitime.config'
+fname_conf_user = 'user/savitime.config'
+
+f = open(fname_conf_default)
 for l in f:
   for l in f:
     if not l.startswith('!'):  continue
@@ -35,6 +41,26 @@ for l in f:
       print("  key: ", key)
       sys.exit(1)
 f.close()
+############################################
+if os.path.exists(fname_conf_user):
+ f = open(fname_conf_user)
+ for l in f:
+   for l in f:
+     if not l.startswith('!'):  continue
+     l = l.strip()
+     ll = l.split(' ')
+     key = ll[0]
+     ###
+     if key == '!sava_fps':  sava_fps = int(ll[1])
+     elif key == '!sava_n_frames':  sava_n_frames = int(ll[1])
+     elif key == '!wait_max':  wait_max = int(ll[1])
+     elif key == '!stabilization_delay':
+       stabilization_delay = int(ll[1])
+     else:
+       print("Error.  Unrecognized key.")
+       print("  key: ", key)
+       sys.exit(1)
+ f.close()
 ############################################
 
 # sava_fps = 120.0
