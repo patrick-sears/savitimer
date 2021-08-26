@@ -6,7 +6,15 @@ from datetime import timedelta
 import sys
 
 
-
+# row 0:  lab1 - time
+# row 1:  top button
+# row 2:  
+# row 3:
+# row 4:  lab2 - Click when...
+# row 5:  lab3 - timer (count-down)
+# row 6:  
+# row 7:  mes4  - sava specs
+# row 8:  2nd button
 
 ############################################
 f = open('savitime.config')
@@ -47,34 +55,39 @@ class c_savitime:
     self.unow = datetime.now()
     #
     self.root = tk.Tk()
-    self.root.geometry('400x300')
+    self.root.geometry('300x600')
     self.root.title("SAVA video timer.")
     #
     self.lab1 = tk.Label(text="", font=font2, fg="#009999")
     self.lab1.grid(column=0, row=0, sticky=tk.W)
     #
     self.lab2 = tk.Label(text="Click when focus is done.", font=font1, fg="#000000")
-    self.lab2.grid(column=0, row=3)
+    self.lab2.grid(column=0, row=4)
     #
     self.lab3 = tk.Label(text="", font=font1, fg="#009999")
-    self.lab3.grid(column=0, row=4, sticky=tk.W)
+    self.lab3.grid(column=0, row=5, sticky=tk.W)
     #
     #
     text4 = "\n"
     text4 += "sava fps:  {0:0.0f}\n".format(sava_fps)
     text4 += "sava frames: {0:0.0f}\n".format(sava_n_frames)
     text4 += "sava vid len: {0:0.1f}s".format(sava_vid_len)
-    # self.lab4 = tk.Label(text=text4, font=font4, fg="#000000", anchor="w")
-    # self.lab4.grid(column=0, row=6, sticky=tk.W)
-    # self.mes4 = tk.Message(text=text4, font=font4, fg="#000000", anchor="w")
     self.mes4 = tk.Message(text=text4, font=font4, fg="#000000", width=240)
-    self.mes4.grid(column=0, row=6, sticky=tk.W)
+    self.mes4.grid(column=0, row=7, sticky=tk.W)
     #
     self.btn1 = tk.Button(self.root, text="Ready.",
       bg="#222288", fg="#ffff00",
+      width=30, height=10,
       command=self.click1
       )
     self.btn1.grid(column=0, row=2, sticky=tk.W)
+    #
+    self.btn2 = tk.Button(self.root, text="---",
+      bg="#777788", fg="#ffff88",
+      width=30, height=3,
+      command=self.click2
+      )
+    self.btn2.grid(column=0, row=8, sticky=tk.W)
     #
     #######################
     self.dt1 = int(stabilization_delay * 1000)
@@ -111,28 +124,48 @@ class c_savitime:
     elif self.timermode == 2 and dt <= 0:
       self.timermode = 3
       self.lab2.configure(text="Ready to save.")
+      self.btn1.configure(
+        bg="#228822", fg="#ffff00",
+        )
       self.timer_t0_dto = datetime.now()
       self.timer_dt = self.dt3/1000
     elif self.timermode == 3 and dt <= 0:
       self.lab2.configure(text="Time is up - save now.")
+      self.btn1.configure(
+        bg="#882222", fg="#ffff00",
+        )
       self.clickmode = 2
-      self.btn1.configure(text="Click when done.")
+      # self.btn1.configure(text="Click when done.")
       self.timemode = 4
   ###
   def click1(self):
-    if self.clickmode == 0:
+    # if self.clickmode == 0:
+    if 1:
       self.clickmode = 1
       self.timer_t0_dto = datetime.now()
       self.timer_dt = self.dt1/1000
       self.timermode = 1
       self.lab2.configure(text="Waiting for stabilization...")
-      self.btn1.configure(text="Cancel")
-    elif self.clickmode > 0:
+      self.btn1.configure(text="Restart",
+          bg="#777788", fg="#ffff88"
+        )
+      self.btn2.configure(text="Cancel")
+    # elif self.clickmode > 0:
+    #   self.clickmode = 0
+    #   self.timermode = 0
+    #   self.btn1.configure(text="Ready.")
+    #   self.lab2.configure(text="Click when focus is done.")
+    #   self.btn2.configure(text="---")
+  ###
+  def click2(self):
+    if self.clickmode > 0:
       self.clickmode = 0
       self.timermode = 0
-      self.btn1.configure(text="Ready.")
+      self.btn1.configure(text="Ready.",
+        bg="#222288", fg="#ffff00"
+        )
       self.lab2.configure(text="Click when focus is done.")
-  ###
+      self.btn2.configure(text="---")
   ###
   ###
   ###
