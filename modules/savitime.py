@@ -74,8 +74,10 @@ font4 = ("Monospace", 10)
 
 ##################################################################
 class c_savitime:
-  ###
   def __init__(self):
+    self.clickmode = 0
+  ###
+  def run(self):
     #
     self.clickmode = 0
     self.unow = datetime.now()
@@ -123,8 +125,10 @@ class c_savitime:
     self.timer_t0_dto = datetime.now()
     self.timer_dt = 0
     self.timermode = 0
+    #
+    self.run1()
   ###
-  def go(self):
+  def run1(self):
     self.run_clock()
     self.root.mainloop()
   ###
@@ -198,5 +202,6 @@ class c_savitime:
 ##################################################################
 
 savitime = c_savitime()
-savitime.go()
+
+
 
