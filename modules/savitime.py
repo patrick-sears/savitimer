@@ -118,9 +118,11 @@ class c_savitime:
     self.btn2.grid(column=0, row=8, sticky=tk.W)
     #
     #######################
-    self.dt1 = int(stabilization_delay * 1000)
-    self.dt2 = int(sava_vid_len * 1000)
-    self.dt3 = wait_max * 1000
+    # self.dt1 = int(stabilization_delay * 1000)
+    # self.dt2 = int(sava_vid_len * 1000)
+    # self.dt3 = wait_max * 1000
+    self.dt1 = int((stabilization_delay+sava_vid_len) * 1000)
+    self.dt2 = wait_max * 1000
     #######################
     self.timer_t0_dto = datetime.now()
     self.timer_dt = 0
@@ -148,44 +150,31 @@ class c_savitime:
       self.root.after(1000, self.run_timer)
     if self.timermode == 1 and dt <= 0:
       self.timermode = 2
-      self.lab2.configure(text="Waiting for full vid...")
-      self.timer_t0_dto = datetime.now()
-      self.timer_dt = self.dt2/1000
-    elif self.timermode == 2 and dt <= 0:
-      self.timermode = 3
       self.lab2.configure(text="Ready to save.")
       self.btn1.configure(
         bg="#228822", fg="#ffff00",
         )
       self.timer_t0_dto = datetime.now()
-      self.timer_dt = self.dt3/1000
-    elif self.timermode == 3 and dt <= 0:
+      self.timer_dt = self.dt2/1000
+    elif self.timermode == 2 and dt <= 0:
       self.lab2.configure(text="Time is up - save now.")
       self.btn1.configure(
         bg="#882222", fg="#ffff00",
         )
       self.clickmode = 2
-      # self.btn1.configure(text="Click when done.")
-      self.timemode = 4
+      self.timemode = 3
   ###
   def click1(self):
-    # if self.clickmode == 0:
     if 1:
       self.clickmode = 1
       self.timer_t0_dto = datetime.now()
       self.timer_dt = self.dt1/1000
       self.timermode = 1
-      self.lab2.configure(text="Waiting for stabilization...")
+      self.lab2.configure(text="Waiting...")
       self.btn1.configure(text="Restart",
           bg="#777788", fg="#ffff88"
         )
       self.btn2.configure(text="Cancel")
-    # elif self.clickmode > 0:
-    #   self.clickmode = 0
-    #   self.timermode = 0
-    #   self.btn1.configure(text="Ready.")
-    #   self.lab2.configure(text="Click when focus is done.")
-    #   self.btn2.configure(text="---")
   ###
   def click2(self):
     if self.clickmode > 0:
