@@ -72,10 +72,16 @@ font1 = ("Monospace", 14)
 font2 = ("Monospace Bold", 12)
 font4 = ("Monospace", 10)
 
+
+
+
+
 ##################################################################
 class c_savitime:
   def __init__(self):
     self.clickmode = 0
+    self.dt1 = int((stabilization_delay+sava_vid_len) * 1000)
+    self.dt2 = wait_max * 1000
   ###
   def run(self):
     #
@@ -99,7 +105,8 @@ class c_savitime:
     text4 = "\n"
     text4 += "sava fps:  {0:0.0f}\n".format(sava_fps)
     text4 += "sava frames: {0:0.0f}\n".format(sava_n_frames)
-    text4 += "sava vid len: {0:0.1f}s".format(sava_vid_len)
+    text4 += "sava vid len: {0:0.1f}s\n".format(sava_vid_len)
+    text4 += "wait time: {0:0.1f}s".format( self.dt1/1000 )
     self.mes4 = tk.Message(text=text4, font=font4, fg="#000000", width=240)
     self.mes4.grid(column=0, row=7, sticky=tk.W)
     #
@@ -117,13 +124,6 @@ class c_savitime:
       )
     self.btn2.grid(column=0, row=8, sticky=tk.W)
     #
-    #######################
-    # self.dt1 = int(stabilization_delay * 1000)
-    # self.dt2 = int(sava_vid_len * 1000)
-    # self.dt3 = wait_max * 1000
-    self.dt1 = int((stabilization_delay+sava_vid_len) * 1000)
-    self.dt2 = wait_max * 1000
-    #######################
     self.timer_t0_dto = datetime.now()
     self.timer_dt = 0
     self.timermode = 0
