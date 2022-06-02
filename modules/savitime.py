@@ -138,7 +138,7 @@ class c_savitime:
     self.unow = datetime.now()
     now = self.unow.strftime("%H:%M:%S")
     self.lab1.configure(text=now)
-    self.root.after(1000, self.run_clock)
+    self.root.after(100, self.run_clock)
     self.run_timer()
   ###
   def run_timer(self):
@@ -146,8 +146,8 @@ class c_savitime:
       self.lab3.configure(text="---")
     else:
       dt = self.timer_dt - (self.unow - self.timer_t0_dto).total_seconds()
-      self.lab3.configure(text="{0:0.0f}s".format(dt))
-      self.root.after(1000, self.run_timer)
+      self.lab3.configure(text="{0:0.1f}s".format(dt))
+      self.root.after(100, self.run_timer)
     if self.timermode == 1 and dt <= 0:
       self.timermode = 2
       self.lab2.configure(text="Ready to save.")
