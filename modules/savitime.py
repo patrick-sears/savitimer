@@ -36,6 +36,8 @@ for l in f:
     elif key == '!wait_max':  wait_max = int(ll[1])
     elif key == '!stabilization_delay':
       stabilization_delay = int(ll[1])
+    elif key == '!run_clock_delay':
+      run_clock_delay = int(ll[1])
     else:
       print("Error.  Unrecognized key.")
       print("  key: ", key)
@@ -82,6 +84,7 @@ class c_savitime:
     self.clickmode = 0
     self.dt1 = int((stabilization_delay+sava_vid_len) * 1000)
     self.dt2 = wait_max * 1000
+    self.run_clock_delay = run_clock_delay
   ###
   def run(self):
     #
@@ -138,8 +141,9 @@ class c_savitime:
     self.unow = datetime.now()
     now = self.unow.strftime("%H:%M:%S")
     self.lab1.configure(text=now)
-    self.root.after(100, self.run_clock)
+    # self.root.after(100, self.run_clock)
     self.run_timer()
+    self.root.after(self.run_clock_delay, self.run_clock)
   ###
   def run_timer(self):
     if self.timermode == 0:
@@ -147,7 +151,7 @@ class c_savitime:
     else:
       dt = self.timer_dt - (self.unow - self.timer_t0_dto).total_seconds()
       self.lab3.configure(text="{0:0.1f}s".format(dt))
-      self.root.after(100, self.run_timer)
+      # self.root.after(100, self.run_timer)
     if self.timermode == 1 and dt <= 0:
       self.timermode = 2
       self.lab2.configure(text="Ready to save.")
